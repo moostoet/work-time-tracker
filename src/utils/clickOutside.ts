@@ -1,20 +1,27 @@
-export function clickOutside<T extends HTMLElement>(node: T) {
-    const handleClick = (event: MouseEvent) => {
-        if (
-            node &&
-            event.target instanceof Element &&
-            !node.contains(event.target) &&
-            !event.defaultPrevented
-        ) {
-            node.dispatchEvent(new CustomEvent<T>('click_outside', { detail: node }))
-        }
-    }
+import type { Action } from 'svelte/action';
 
-    document.addEventListener('click', handleClick, true)
+export const clickOutside: Action<
+	HTMLElement,
+	undefined,
+	{ 'on:click_outside': (e: CustomEvent<{ detail: HTMLElement }>) => void }
+> = (node) => {
+	const handleClick = (event: MouseEvent) => {
+		console.log(event);
+		if (
+			node &&
+			event.target instanceof Element &&
+			!node.contains(event.target) &&
+			!event.defaultPrevented
+		) {
+			node.dispatchEvent(new CustomEvent('click_outside', { detail: node }));
+		}
+	};
 
-    return {
-        destroy() {
-            document.removeEventListener('click', handleClick, true)
-        }
-    }
-}
+	document.addEventListener('click', handleClick, true);
+
+	return {
+		destroy() {
+			document.removeEventListener('click', handleClick, true);
+		}
+	};
+};

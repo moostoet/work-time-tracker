@@ -1,4 +1,4 @@
-export const convertISODate = (timestamp: Date): string => {
+export const convertISODate = (timestamp: string): string => {
     const date = new Date(timestamp);
 
     const month = (date.getMonth() + 1).toString().padStart(2, '0')
@@ -11,7 +11,7 @@ export const convertISODate = (timestamp: Date): string => {
     return `${month}/${day}/${year} ${hours}:${minutes} ${AMorPM}`
 }
 
-export const calculateHours = (startTimestamp: Date, endTimestamp: Date): string => {
+export const calculateHours = (startTimestamp: string, endTimestamp: string): string => {
     const start = new Date(startTimestamp);
     const end = new Date(endTimestamp);
     const diff = end.getTime() - start.getTime();
